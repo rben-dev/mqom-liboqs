@@ -257,6 +257,7 @@ int BLC_Eval_x4_memopt(const uint32_t e[4], const uint8_t salt[MQOM2_PARAM_SALT_
 
 	uint8_t *hash_ptr[4] = { com[0], com[1], com[2], com[3] };
 	ret = xof_squeeze_x4(&xof_ctx_x4, hash_ptr, MQOM2_PARAM_DIGEST_SIZE);
+	ERR(ret, err);
 
 	ret = 0;
 err:

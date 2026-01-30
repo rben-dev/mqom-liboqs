@@ -318,14 +318,18 @@ static inline void _XOF_Release(Keccak_HashInstance *ctx) {
 	if ((ctx != NULL) && (ctx->magic == XOF_CTX_INIT_MAGIC)) {
 		__XOF_Release(&(ctx->ctx));
 	}
-	ctx->magic = 0;
+	if(ctx != NULL){
+		ctx->magic = 0;
+	}
 	return;
 }
 static inline void _XOF_Release_x4(Keccak_HashInstancetimes4 *ctx) {
 	if ((ctx != NULL) && (ctx->magic == XOF_CTX_X4_INIT_MAGIC)) {
 		__XOF_Release_x4(&(ctx->ctx));
 	}
-	ctx->magic = 0;
+	if(ctx != NULL){
+		ctx->magic = 0;
+	}
 	return;
 }
 

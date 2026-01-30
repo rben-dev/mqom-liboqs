@@ -280,7 +280,7 @@ int GGMTree_Expand(const uint8_t salt[MQOM2_PARAM_SALT_SIZE], const uint8_t rsee
 			num_derivations = 2;
 		}
 #ifdef USE_ENC_X8
-		if (j == 2) {
+		else if (j == 2) {
 			num_derivations = 4;
 		} else {
 			num_derivations = 8;
@@ -471,7 +471,7 @@ int GGMTree_PartiallyExpand(const uint8_t salt[MQOM2_PARAM_SALT_SIZE], const uin
 			num_derivations = 2;
 		}
 #ifdef USE_ENC_X8
-		if (j == 2) {
+		else if (j == 2) {
 			num_derivations = 4;
 		} else {
 			num_derivations = 8;

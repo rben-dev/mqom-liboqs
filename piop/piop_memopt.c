@@ -21,6 +21,7 @@ static int ExpandBatchingChallenge(const uint8_t com[MQOM2_PARAM_DIGEST_SIZE], f
 	ret = xof_update(&xof_ctx, com, MQOM2_PARAM_DIGEST_SIZE);
 	ERR(ret, err);
 	ret = xof_squeeze(&xof_ctx, stream, MQOM2_PARAM_ETA * BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU));
+	ERR(ret, err);
 	for (i = 0; i < MQOM2_PARAM_ETA; i++) {
 		field_ext_parse(&stream[i * BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU)], MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU, Gamma[i]);
 	}
