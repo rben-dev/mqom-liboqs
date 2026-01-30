@@ -23,6 +23,7 @@
 #endif
 
 /* Namespacing with the appropriate prefix */
+/* Private API */
 #ifndef MQOM_NAMESPACE
 #ifdef APPLY_NAMESPACE
 #ifndef concat2
@@ -32,6 +33,18 @@
 #define MQOM_NAMESPACE(s) concat2(APPLY_NAMESPACE, s)
 #else
 #define MQOM_NAMESPACE(s) s
+#endif
+#endif
+/* Public API */
+#ifndef MQOM_PUBLIC_API_NAMESPACE
+#ifdef APPLY_PUBLIC_API_NAMESPACE
+#ifndef concat2
+#define _concat2(a, b) a ## b
+#define concat2(a, b) _concat2(a, b)
+#endif
+#define MQOM_PUBLIC_API_NAMESPACE(s) concat2(APPLY_PUBLIC_API_NAMESPACE, s)
+#else
+#define MQOM_PUBLIC_API_NAMESPACE(s) s
 #endif
 #endif
 
