@@ -144,7 +144,7 @@ int BLC_Eval_x1_memopt(uint32_t e, const uint8_t salt[MQOM2_PARAM_SALT_SIZE], co
 	prg_cache = init_prg_cache_pub(PRG_BLC_SIZE);
 #endif
 
-	ret = GGMTree_InitIncrementalPartialExpansion(&ggm_tree, salt, (uint8_t(*)[MQOM2_PARAM_SEED_SIZE]) path, e, i_star);
+	ret = GGMTree_InitIncrementalPartialExpansion(&ggm_tree, salt, (const uint8_t(*)[MQOM2_PARAM_SEED_SIZE]) path, e, i_star);
 	ERR(ret, err);
 
 	ret = init_seedcommit_pub(&seedcommit_ctx, salt, e);

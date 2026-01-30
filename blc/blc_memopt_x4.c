@@ -77,7 +77,7 @@ int BLC_Commit_x4_memopt(const uint32_t e[4], const uint8_t rseed[4][MQOM2_PARAM
 			(uint8_t*) (exp_x4 + 2 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 			(uint8_t*) (exp_x4 + 3 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE)
 		};
-		ret = PRG_x4(salt, e, lseed_x4, PRG_BLC_SIZE, exp_ptr, prg_cache_x4, 4);
+		ret = PRG_x4(salt, e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])lseed_x4, PRG_BLC_SIZE, exp_ptr, prg_cache_x4, 4);
 		ERR(ret, err);
 		__BENCHMARK_STOP__(BS_BLC_PRG);
 
@@ -161,10 +161,10 @@ int BLC_Eval_x4_memopt(const uint32_t e[4], const uint8_t salt[MQOM2_PARAM_SALT_
 #endif
 
 	const uint8_t (*paths[4])[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE] = {
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[0],
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[1],
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[2],
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[3],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[0],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[1],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[2],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[3],
 	};
 	uint32_t i_star_uint32[4] = {i_star[0], i_star[1], i_star[2], i_star[3]};
 	ret = GGMTree_InitIncrementalPartialExpansion_x4(&ggm_tree_x4, salt, paths, e, i_star_uint32);
@@ -208,7 +208,7 @@ int BLC_Eval_x4_memopt(const uint32_t e[4], const uint8_t salt[MQOM2_PARAM_SALT_
 			(uint8_t*) (exp_x4 + 2 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 			(uint8_t*) (exp_x4 + 3 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE)
 		};
-		ret = PRG_x4_pub(salt, e, lseed_x4, PRG_BLC_SIZE, exp_ptr, prg_cache_x4, 4);
+		ret = PRG_x4_pub(salt, e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])lseed_x4, PRG_BLC_SIZE, exp_ptr, prg_cache_x4, 4);
 		ERR(ret, err);
 		for (uint32_t e_ = 0; e_ < 4; e_++) {
 			if (i == i_star[e_]) {

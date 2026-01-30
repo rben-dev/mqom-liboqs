@@ -77,7 +77,7 @@ int BLC_Commit_x2_memopt(const uint32_t e[2], const uint8_t rseed[2][MQOM2_PARAM
 			(uint8_t*) (exp_x2 + 0 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 			(uint8_t*) (exp_x2 + 1 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 		};
-		ret = PRG_x2(salt, e, lseed_x2, PRG_BLC_SIZE, exp_ptr, prg_cache_x2, 2);
+		ret = PRG_x2(salt, e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])lseed_x2, PRG_BLC_SIZE, exp_ptr, prg_cache_x2, 2);
 		ERR(ret, err);
 		__BENCHMARK_STOP__(BS_BLC_PRG);
 
@@ -160,8 +160,8 @@ int BLC_Eval_x2_memopt(const uint32_t e[2], const uint8_t salt[MQOM2_PARAM_SALT_
 #endif
 
 	const uint8_t (*paths[2])[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE] = {
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[0],
-		(uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[1],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[0],
+		(const uint8_t(*)[MQOM2_PARAM_NB_EVALS_LOG][MQOM2_PARAM_SEED_SIZE]) &path[1],
 	};
 	uint32_t i_star_uint32[2] = {i_star[0], i_star[1]};
 	ret = GGMTree_InitIncrementalPartialExpansion_x2(&ggm_tree_x2, salt, paths, e, i_star_uint32);
@@ -206,7 +206,7 @@ int BLC_Eval_x2_memopt(const uint32_t e[2], const uint8_t salt[MQOM2_PARAM_SALT_
 			(uint8_t*) (exp_x2 + 0 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 			(uint8_t*) (exp_x2 + 1 * (BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_MQ_N) + BYTE_SIZE_FIELD_EXT(MQOM2_PARAM_ETA)) + MQOM2_PARAM_SEED_SIZE),
 		};
-		ret = PRG_x2_pub(salt, e, lseed_x2, PRG_BLC_SIZE, exp_ptr, prg_cache_x2, 2);
+		ret = PRG_x2_pub(salt, e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])lseed_x2, PRG_BLC_SIZE, exp_ptr, prg_cache_x2, 2);
 		ERR(ret, err);
 		for (uint32_t e_ = 0; e_ < 2; e_++) {
 			if (i == i_star[e_]) {

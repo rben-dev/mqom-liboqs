@@ -114,7 +114,7 @@ int BLC_Commit_default(const uint8_t mseed[MQOM2_PARAM_SEED_SIZE], const uint8_t
 				(uint8_t*) (exp[i + 6] + MQOM2_PARAM_SEED_SIZE),
 				(uint8_t*) (exp[i + 7] + MQOM2_PARAM_SEED_SIZE)
 			};
-			ret = PRG_x8(salt, &e, &lseed[i], PRG_BLC_SIZE, exp_ptr, prg_cache_x8, 1);
+			ret = PRG_x8(salt, &e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])&lseed[i], PRG_BLC_SIZE, exp_ptr, prg_cache_x8, 1);
 			ERR(ret, err);
 			__BENCHMARK_STOP__(BS_BLC_PRG);
 
@@ -306,7 +306,7 @@ int BLC_Eval_default(const uint8_t salt[MQOM2_PARAM_SALT_SIZE], const uint8_t co
 		prg_cache_x8 = init_prg_cache_pub_x8(PRG_BLC_SIZE);
 #endif
 
-		ret = GGMTree_PartiallyExpand(salt, (uint8_t(*)[MQOM2_PARAM_SEED_SIZE]) &path[e * (MQOM2_PARAM_NB_EVALS_LOG * MQOM2_PARAM_SEED_SIZE)], e, i_star[e], lseed);
+		ret = GGMTree_PartiallyExpand(salt, (const uint8_t(*)[MQOM2_PARAM_SEED_SIZE]) &path[e * (MQOM2_PARAM_NB_EVALS_LOG * MQOM2_PARAM_SEED_SIZE)], e, i_star[e], lseed);
 		ERR(ret, err);
 
 		TweakSalt(salt, tweaked_salt, 0, e, 0);
@@ -355,7 +355,7 @@ int BLC_Eval_default(const uint8_t salt[MQOM2_PARAM_SALT_SIZE], const uint8_t co
 				(uint8_t*) (exp[i + 6] + MQOM2_PARAM_SEED_SIZE),
 				(uint8_t*) (exp[i + 7] + MQOM2_PARAM_SEED_SIZE)
 			};
-			ret = PRG_x8_pub(salt, &e, &lseed[i], PRG_BLC_SIZE, exp_ptr, prg_cache_x8, 1);
+			ret = PRG_x8_pub(salt, &e, (const uint8_t (*)[MQOM2_PARAM_SEED_SIZE])&lseed[i], PRG_BLC_SIZE, exp_ptr, prg_cache_x8, 1);
 			ERR(ret, err);
 
 			for (uint32_t i_ = 0; i_ < 8; i_++) {

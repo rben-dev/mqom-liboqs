@@ -205,7 +205,10 @@ int Sign(const uint8_t sk[MQOM2_SK_SIZE], const uint8_t *msg, unsigned long long
 
 	/* Compute P_alpha */
 	__BENCHMARK_START__(BS_PIOP_COMPUTE);
-	ret = ComputePAlpha(com1, x0, u0, u1, x, &sk[0], alpha0, alpha1);
+	ret = ComputePAlpha(com1, (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])x0,
+				  (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_ETA)])u0,
+				  (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_ETA)])u1,
+				  x, &sk[0], alpha0, alpha1);
 	ERR(ret, err);
 	__BENCHMARK_STOP__(BS_PIOP_COMPUTE);
 
@@ -408,7 +411,9 @@ int Verify_default(const uint8_t pk[MQOM2_PK_SIZE], const uint8_t *msg, unsigned
 	for (e = 0; e < MQOM2_PARAM_TAU; e++) {
 		field_ext_parse(&serialized_alpha1[e * BYTE_SIZE_FIELD_BASE(MQOM2_PARAM_ETA * MQOM2_PARAM_MU)], MQOM2_PARAM_ETA, alpha1[e]);
 	}
-	ret = RecomputePAlpha(com1, alpha1, i_star, x_eval, u_eval, mseed_eq, y, alpha0);
+	ret = RecomputePAlpha(com1, (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_ETA)])alpha1, i_star,
+				    (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])x_eval,
+				    (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_ETA)])u_eval, mseed_eq, y, alpha0);
 	ERR(ret, err);
 
 	/* Hash P_alpha */

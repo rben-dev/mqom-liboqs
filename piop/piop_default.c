@@ -110,7 +110,7 @@ int ComputePAlpha_default(const uint8_t com[MQOM2_PARAM_DIGEST_SIZE], const fiel
 
 	field_ext_elt z0[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU)], z1[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU)];
 	for (e = 0; e < MQOM2_PARAM_TAU; e++) {
-		ret = ComputePz(x0[e], x, A_hat, b_hat, z0, z1, t1_cache);
+		ret = ComputePz(x0[e], x, (const field_ext_elt (*)[MQOM2_PARAM_MQ_N][FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])A_hat, (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])b_hat, z0, z1, t1_cache);
 		ERR(ret, err);
 		__BENCHMARK_START__(BS_PIOP_BATCH_AND_MASK);
 #if MQOM2_PARAM_WITH_STATISTICAL_BATCHING == 1
@@ -229,7 +229,7 @@ int RecomputePAlpha_default(const uint8_t com[MQOM2_PARAM_DIGEST_SIZE], const fi
 	field_ext_elt v_alpha[FIELD_EXT_PACKING(MQOM2_PARAM_ETA)];
 	for (e = 0; e < MQOM2_PARAM_TAU; e++) {
 		field_ext_elt r = get_evaluation_point(i_star[e]);
-		ret = ComputePzEval(r, x_eval[e], A_hat, b_hat, y, v_z);
+		ret = ComputePzEval(r, x_eval[e], (const field_ext_elt (*)[MQOM2_PARAM_MQ_N][FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])A_hat, (const field_ext_elt (*)[FIELD_EXT_PACKING(MQOM2_PARAM_MQ_N)])b_hat, y, v_z);
 		ERR(ret, err);
 #if MQOM2_PARAM_WITH_STATISTICAL_BATCHING == 1
 		for (i = 0; i < MQOM2_PARAM_ETA; i++) {
