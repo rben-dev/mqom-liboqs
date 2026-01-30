@@ -153,6 +153,7 @@ int ExpandEquations(const uint8_t mseed_eq[2 * MQOM2_PARAM_SEED_SIZE], field_ext
 
 	/* Generate the equations */
 	i = 0;
+	(void)i;
 #if defined(USE_XOF_X4)
 	/* When using X4 XOF, we check for the proper size */
 	if ((MQOM2_PARAM_MQ_M / MQOM2_PARAM_MU) < 4) {
