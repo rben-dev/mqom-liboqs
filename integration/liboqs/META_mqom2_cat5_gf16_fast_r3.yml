@@ -31,7 +31,7 @@ implementations:
     no-secret-dependent-branching-claimed: true
     no-secret-dependent-branching-checked-by-valgrind: true
     large-stack-usage: true
-    supported-platforms: all
+    supported_platforms: all
   - name: memopt
     version: 2.1
     folder_name: .
@@ -43,7 +43,7 @@ implementations:
     no-secret-dependent-branching-claimed: true
     no-secret-dependent-branching-checked-by-valgrind: true
     large-stack-usage: false
-    supported-platforms: all
+    supported_platforms: all
   - name: avx2
     version: 2.1
     folder_name: .
